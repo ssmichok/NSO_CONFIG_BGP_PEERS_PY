@@ -1,0 +1,75 @@
+/*
+ * Just a dummy Yang model.
+ */
+module service {
+
+  namespace "http://example.com/service";
+  prefix service;
+
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import tailf-common {
+    prefix tailf;
+  }
+
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  import tailf-ned-cisco-ios-xr {
+    prefix ios-xr;
+  }
+
+
+  description
+    "Bla bla...";
+
+  revision 2016-01-01 {
+    description
+      "Initial revision.";
+  }
+
+
+  augment /ncs:services {
+
+    list MyConfigureBgpPeers {
+
+      key name;
+      leaf name {
+        tailf:info "Unique service id";
+        tailf:cli-allow-range;
+        type string;
+      }
+
+      uses ncs:service-data;
+      ncs:servicepoint service-servicepoint;
+      
+	// replace with your own stuff here
+      list Peer {
+        tailf:info "Create BGP Peers";
+        min-elements 2;
+        max-elements 2;
+        key device;
+
+       leaf device {
+        tailf:info "PE Router";
+        mandatory true;
+        type leafref {
+         path "/ncs:devices/ncs:device/ncs:name";
+        }
+       }
+       leaf GigabitEthernet {
+        tailf:info "Peering GigabitEthernet Interface Number";
+        mandatory true;
+        type leafref {
+                path "/ncs:devices/ncs:device[ncs:name=current()/../device]/ncs:config/ios-xr:interface/ios-xr:GigabitEthernet/ios-xr:id";
+        }
+       }
+      }
+
+    }
+  }
+}

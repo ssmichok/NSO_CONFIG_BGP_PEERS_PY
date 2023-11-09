@@ -1,0 +1,12 @@
+<ncs-package xmlns="http://tail-f.com/ns/ncs-packages">
+  <name>MyConfigureBgpPeers</name>
+  <package-version>1.0</package-version>
+  <description>Generated Python package</description>
+  <ncs-min-version>4.2</ncs-min-version>
+  <component>
+    <name>service</name>
+    <application>
+      <python-class-name>service.MyConfigureBgpPeers</python-class-name>
+    </application>
+  </component>
+</ncs-package>
